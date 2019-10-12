@@ -1,3 +1,5 @@
-# 1 这个代码通过JNI实现Java版本的BLS12-381曲线的聚合签名
-# 2 依赖 https://github.com/herumi/mcl
+# 说明
 
+1 这个代码通过JNI实现BLS12-381的签名聚合
+
+2 依赖 https://github.com/herumi/mcl
