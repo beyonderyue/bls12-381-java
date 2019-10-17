@@ -16,7 +16,7 @@ public class JNIDevelopment {
         sources = new LinkedList<String>();
         //这里加入本地库文件名，也可以稍加修改读取一个外部xml或properties
         sources.add("libmcljava.dylib");
-       // sources.add("libmcljava.so");
+        sources.add("libmcljava.so");
     }
     private Boolean sourceExist(String sourceName){
         File f = new File("." + File.separator + sourceName);
