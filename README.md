@@ -10,20 +10,20 @@
 
 5 运行结果
 
-libName : libmcljava.so
-curve=BLS12_381
-提取公钥耗时 16
-签名耗时 2
-OK : verify signature
-OK : verify signature
-OK : verify signature
-OK : verify signature
-OK : verify signature
-OK : verify signature
-OK : verify signature
-OK : verify signature
-OK : verify signature
-OK : verify signature
-单个验证签名耗时 22
-OK : verify signature
-聚合验证签名耗时 2
+libName : libmcljava.so  
+curve=BLS12_381  
+提取公钥耗时 16  
+签名耗时 2  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+OK : verify signature  
+单个验证签名耗时 22  
+OK : verify signature  
+聚合验证签名耗时 2  
