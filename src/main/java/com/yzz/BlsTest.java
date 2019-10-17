@@ -12,11 +12,8 @@ import java.lang.reflect.Field;
 public class BlsTest {
 	static {
 		String lib = "mcljava";
-		try {
-			addDir("/Users/yuezengzhen/git/mcl/lib");//Add your path of the mcljava lib
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		JNIDevelopment deve = new JNIDevelopment();
+		deve.doDefaultDevelopment();
 		String libName = System.mapLibraryName(lib);
 		System.out.println("libName : " + libName);
 		System.loadLibrary(lib);
