@@ -49,4 +49,20 @@ public class PublicKey implements java.security.PublicKey {
         Mcl.pairing(e2, Q, g2); // e2 = e(s H, Q);
         return e1.equals(e2);
     }
+    /*Here, h is the aggregation of the msg hashAndMapToG2*/
+    public boolean verifyAggregate(byte[] h, byte[] sig) {
+        G2 H = new G2();
+        H.deserialize(h); // H = Hash(m)
+        G1 pub = new G1();
+        pub.deserialize(pubKey);
+        G1 Q = new G1();
+        Q.deserialize(HexBin.decode(QF));
+        G2 g2 = new G2();
+        g2.deserialize(sig);
+        GT e1 = new GT();
+        GT e2 = new GT();
+        Mcl.pairing(e1, pub, H); // e1 = e(H, s Q)
+        Mcl.pairing(e2, Q, g2); // e2 = e(s H, Q);
+        return e1.equals(e2);
+    }
 }
