@@ -14,9 +14,13 @@ public class JNIDevelopment {
     public JNIDevelopment(){
         cache = new byte[1024];
         sources = new LinkedList<String>();
-        //这里加入本地库文件名，也可以稍加修改读取一个外部xml或properties
-        sources.add("libmcljava.dylib");
-        sources.add("libmcljava.so");
+        String OS = System.getProperty("os.name").toLowerCase();
+        System.out.println(OS);
+        if(OS.contains("mac")) {
+            sources.add("libmcljava.dylib");
+        } else if(OS.contains("linux")) {
+            sources.add("libmcljava.so");
+        }
     }
     private Boolean sourceExist(String sourceName){
         File f = new File("." + File.separator + sourceName);
