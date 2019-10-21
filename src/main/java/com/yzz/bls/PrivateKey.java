@@ -1,4 +1,4 @@
-package com.yzz;
+package com.yzz.bls;
 
 import com.herumi.mcl.Fr;
 import com.herumi.mcl.G1;

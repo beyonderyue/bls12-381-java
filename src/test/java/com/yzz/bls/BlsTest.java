@@ -1,7 +1,9 @@
-package com.yzz;
+package com.yzz.bls;
 
 import com.herumi.mcl.Mcl;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import com.yzz.bls.PrivateKey;
+import com.yzz.bls.PublicKey;
 import junit.framework.TestCase;
 
 public class BlsTest extends TestCase {
