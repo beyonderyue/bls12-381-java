@@ -3,12 +3,9 @@ package com.yzz;
 import com.herumi.mcl.Mcl;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import junit.framework.TestCase;
-import org.junit.jupiter.api.Test;
 
 public class BlsTest extends TestCase {
 
-
-    @Test
     public void testBls() {
         Bls bls = new Bls(Mcl.BLS12_381);
         PrivateKey privateKey = bls.generateSecKey();
@@ -20,7 +17,6 @@ public class BlsTest extends TestCase {
 
     }
 
-    @Test
     public void testAggregateMsg() {
         byte[][] msg = {"hello".getBytes(),"world".getBytes(),"!".getBytes()};
         Bls bls = new Bls(Mcl.BLS12_381);
@@ -37,7 +33,6 @@ public class BlsTest extends TestCase {
         assertTrue(publicKey.verifyAggregate(amsg, asig));
     }
 
-    @Test
     public void testAggregateSignature() {
         byte[] msg = "Hello world !".getBytes();
         Bls bls = new Bls(Mcl.BLS12_381);
@@ -54,5 +49,23 @@ public class BlsTest extends TestCase {
         PublicKey newPub = new PublicKey(Mcl.BLS12_381, pub);
         assertTrue(newPub.verify(msg, sig));
     }
+
+    /*public void testAggregateSignatureAndMsg() {
+        byte[][] msgs = {"hello".getBytes(),"world".getBytes(),"!".getBytes()};
+        Bls bls = new Bls(Mcl.BLS12_381);
+        PrivateKey[] privateKeys = new PrivateKey[msgs.length];
+        byte[][] sigs = new byte[privateKeys.length][];
+        byte[][] pubs = new byte[privateKeys.length][];
+        for(int i=0;i<privateKeys.length;i++) {
+            privateKeys[i] = bls.generateSecKey();
+            sigs[i] = privateKeys[i].sign(msgs[i]);
+            pubs[i] = privateKeys[i].getPublicKey().getEncoded();
+        }
+        byte[] sig = bls.aggregateSignature(sigs);
+        byte[] pub = bls.aggregatePublicKey(pubs);
+        byte[] msg = bls.aggregateMsg(msgs);
+        PublicKey newPub = new PublicKey(Mcl.BLS12_381, pub);
+        assertTrue(newPub.verify(msgs[0], sig));
+    }*/
 
 }
