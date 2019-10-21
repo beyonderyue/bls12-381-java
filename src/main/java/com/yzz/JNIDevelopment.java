@@ -1,10 +1,8 @@
 package com.yzz;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,10 +13,11 @@ public class JNIDevelopment {
         cache = new byte[1024];
         sources = new LinkedList<String>();
         String OS = System.getProperty("os.name").toLowerCase();
-        System.out.println(OS);
-        if(OS.contains("mac")) {
+        String ARCH = System.getProperty(("os.arch")).toLowerCase();
+        System.out.println(OS + " | " + ARCH);
+        if(OS.contains("mac") && ARCH.contains("x86_64")) {
             sources.add("libmcljava.dylib");
-        } else if(OS.contains("linux")) {
+        } else if(OS.contains("linux") && ARCH.contains("amd64")) {
             sources.add("libmcljava.so");
         }
     }
@@ -58,7 +57,6 @@ public class JNIDevelopment {
             }
             catch(Exception e){
                 System.out.println("[JNIDEV]:ERROR IN COPY JNI LIB!");
-                e.printStackTrace();
                 return false;
             }
         }
