@@ -3,18 +3,22 @@ package com.yzz.bls;
 import com.herumi.mcl.G1;
 import com.herumi.mcl.G2;
 import com.herumi.mcl.Mcl;
-
+/*
+*  BLS API
+*  Now only BLS12-381 supported
+*  created by yuezz 201910
+ */
 public class Bls implements BlsConstants{
     static {
         String lib = "mcljava";
-        JNIDevelopment devel = new JNIDevelopment();
-        devel.doDefaultDevelopment();
+        JNIEnv env = new JNIEnv();
+        env.prepare();
         String libName = System.mapLibraryName(lib);
         System.loadLibrary(lib);
     }
     private int curveType;
     /*
-    生成私钥
+    * Generate private key
      */
     public PrivateKey generateSecKey() {
         PrivateKey privateKey = new PrivateKey(curveType);
@@ -25,7 +29,7 @@ public class Bls implements BlsConstants{
         Mcl.SystemInit(curveType);
     }
     /*
-   聚合签名
+     * Aggregate signatures
      */
     public byte[] aggregateSignature(byte[][] s) {
         G2[] ss = new G2[s.length];
@@ -39,7 +43,7 @@ public class Bls implements BlsConstants{
         return ss[0].serialize();
     }
     /*
-    聚合公钥
+     * Aggregate public key
      */
     public byte[] aggregatePublicKey(byte[][] pub) {
         G1[] pubs = new G1[pub.length];
@@ -53,7 +57,7 @@ public class Bls implements BlsConstants{
         return pubs[0].serialize();
     }
     /*
-    聚合待签名消息
+     * Aggregate message to be signed
      */
     public byte[] aggregateMsg(byte[][] msg) {
         G2[] msgs = new G2[msg.length];

@@ -13,7 +13,7 @@ public class PrivateKey implements java.security.PrivateKey{
 
     @Override
     public String getAlgorithm() {
-        if(curveType == Mcl.BLS12_381) {
+        if(curveType == Bls.BLS12_381) {
             return "BLS12-381";
         } else {
             return "NOT SUPPORTED";
@@ -48,7 +48,7 @@ public class PrivateKey implements java.security.PrivateKey{
         return publicKey;
     }
     /*
-    签名，msg是待签名消息
+     * Sign a message
      */
     public byte[] sign(byte[] msg) {
         G2 H = new G2();

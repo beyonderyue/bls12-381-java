@@ -12,7 +12,7 @@ public class PublicKey implements java.security.PublicKey {
     private String QF = "282899BF4430ADD41BDCE37577237ED1CCF1D1DD8F035ABEFC5CB4B2F5C8845F45257BACD6C4019535B0DC651084FF02";
     @Override
     public String getAlgorithm() {
-        if(curveType == Mcl.BLS12_381) {
+        if(curveType == Bls.BLS12_381) {
             return "BLS12-381";
         } else {
             return "NOT SUPPORTED";
@@ -34,8 +34,9 @@ public class PublicKey implements java.security.PublicKey {
         this.pubKey = pubKey;
     }
     /*
-    * 验证签名，msg是待签名消息
-    *
+     * Veryfi signature
+     * Case 1: single message and single signature
+     * Case 2: single message and multiple signatures
      */
     public boolean verify(byte[] msg, byte[] sig) {
         G2 H = new G2();
@@ -53,8 +54,10 @@ public class PublicKey implements java.security.PublicKey {
         return e1.equals(e2);
     }
     /*
-    * 验证聚合签名，h是待签名消息经过hashAndMapToG2函数处理的返回值
-    * */
+     * Verify mutiple signatures
+     * Case: Single private key and single message with multiple signatures
+     * h: Not the message itself, it's result of hashAndMapToG2
+     */
     public boolean verifyAggregate(byte[] h, byte[] sig) {
         G2 H = new G2();
         H.deserialize(h); // H = Hash(m)

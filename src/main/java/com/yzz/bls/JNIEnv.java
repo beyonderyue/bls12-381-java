@@ -6,10 +6,14 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-public class JNIDevelopment {
+/*
+ * JNI env prepare
+ * created by yuezz 201910
+ */
+public class JNIEnv {
     byte[] cache;
     List<String> sources;
-    public JNIDevelopment(){
+    public JNIEnv(){
         cache = new byte[1024];
         sources = new LinkedList<String>();
         String OS = System.getProperty("os.name").toLowerCase();
@@ -25,12 +29,12 @@ public class JNIDevelopment {
         File f = new File("." + File.separator + sourceName);
         return f.exists();
     }
-    public void doDefaultDevelopment(){
+    public void prepare(){
         for (String s:sources){
-            doDevelopment(s);
+            copy(s);
         }
     }
-    public Boolean doDevelopment(String sourceName){
+    public Boolean copy(String sourceName){
         if(sourceExist(sourceName)){
             return true;
         } else{

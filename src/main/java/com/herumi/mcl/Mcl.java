@@ -8,7 +8,7 @@
 
 package com.herumi.mcl;
 
-public class Mcl implements MclConstants {
+public class Mcl {
   public static void SystemInit(int curveType) {
     MclJNI.SystemInit(curveType);
   }
