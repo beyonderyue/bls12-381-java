@@ -4,7 +4,7 @@ import com.herumi.mcl.G1;
 import com.herumi.mcl.G2;
 import com.herumi.mcl.Mcl;
 
-public class Bls {
+public class Bls implements BlsConstants{
     static {
         String lib = "mcljava";
         JNIDevelopment devel = new JNIDevelopment();
@@ -13,6 +13,9 @@ public class Bls {
         System.loadLibrary(lib);
     }
     private int curveType;
+    /*
+    生成私钥
+     */
     public PrivateKey generateSecKey() {
         PrivateKey privateKey = new PrivateKey(curveType);
         return privateKey;
@@ -21,7 +24,9 @@ public class Bls {
         this.curveType = curveType;
         Mcl.SystemInit(curveType);
     }
-
+    /*
+   聚合签名
+     */
     public byte[] aggregateSignature(byte[][] s) {
         G2[] ss = new G2[s.length];
         for(int i=0;i<s.length;i++) {
@@ -33,7 +38,9 @@ public class Bls {
         }
         return ss[0].serialize();
     }
-
+    /*
+    聚合公钥
+     */
     public byte[] aggregatePublicKey(byte[][] pub) {
         G1[] pubs = new G1[pub.length];
         for(int i=0;i<pub.length;i++) {
@@ -45,7 +52,9 @@ public class Bls {
         }
         return pubs[0].serialize();
     }
-
+    /*
+    聚合待签名消息
+     */
     public byte[] aggregateMsg(byte[][] msg) {
         G2[] msgs = new G2[msg.length];
         for(int i=0;i<msg.length;i++) {

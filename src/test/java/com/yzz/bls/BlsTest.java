@@ -1,15 +1,12 @@
 package com.yzz.bls;
 
-import com.herumi.mcl.Mcl;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
-import com.yzz.bls.PrivateKey;
-import com.yzz.bls.PublicKey;
 import junit.framework.TestCase;
 
 public class BlsTest extends TestCase {
 
     public void testBls() {
-        Bls bls = new Bls(Mcl.BLS12_381);
+        Bls bls = new Bls(Bls.BLS12_381);
         PrivateKey privateKey = bls.generateSecKey();
         System.out.println(HexBin.encode(privateKey.getEncoded()));
 
@@ -21,7 +18,7 @@ public class BlsTest extends TestCase {
 
     public void testAggregateMsg() {
         byte[][] msg = {"hello".getBytes(),"world".getBytes(),"!".getBytes()};
-        Bls bls = new Bls(Mcl.BLS12_381);
+        Bls bls = new Bls(Bls.BLS12_381);
         PrivateKey privateKey = bls.generateSecKey();
         byte[][] sigs = new byte[msg.length][];
         for (int i=0;i<msg.length;i++) {
@@ -37,7 +34,7 @@ public class BlsTest extends TestCase {
 
     public void testAggregateSignature() {
         byte[] msg = "Hello world !".getBytes();
-        Bls bls = new Bls(Mcl.BLS12_381);
+        Bls bls = new Bls(Bls.BLS12_381);
         PrivateKey[] privateKeys = new PrivateKey[10];
         byte[][] sigs = new byte[privateKeys.length][];
         byte[][] pubs = new byte[privateKeys.length][];
@@ -48,7 +45,7 @@ public class BlsTest extends TestCase {
         }
         byte[] sig = bls.aggregateSignature(sigs);
         byte[] pub = bls.aggregatePublicKey(pubs);
-        PublicKey newPub = new PublicKey(Mcl.BLS12_381, pub);
+        PublicKey newPub = new PublicKey(Bls.BLS12_381, pub);
         assertTrue(newPub.verify(msg, sig));
     }
 
@@ -66,7 +63,7 @@ public class BlsTest extends TestCase {
         byte[] sig = bls.aggregateSignature(sigs);
         byte[] pub = bls.aggregatePublicKey(pubs);
         byte[] msg = bls.aggregateMsg(msgs);
-        PublicKey newPub = new PublicKey(Mcl.BLS12_381, pub);
+        PublicKey newPub = new PublicKey(Bls.BLS12_381, pub);
         assertTrue(newPub.verify(msgs[0], sig));
     }*/
 

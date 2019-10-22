@@ -47,7 +47,9 @@ public class PrivateKey implements java.security.PrivateKey{
         PublicKey publicKey = new PublicKey(curveType, pub.serialize());
         return publicKey;
     }
-
+    /*
+    签名，msg是待签名消息
+     */
     public byte[] sign(byte[] msg) {
         G2 H = new G2();
         Mcl.hashAndMapToG2(H, msg); // H = Hash(m)

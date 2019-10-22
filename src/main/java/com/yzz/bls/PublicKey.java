@@ -33,7 +33,10 @@ public class PublicKey implements java.security.PublicKey {
         this.curveType = curveType;
         this.pubKey = pubKey;
     }
-
+    /*
+    * 验证签名，msg是待签名消息
+    *
+     */
     public boolean verify(byte[] msg, byte[] sig) {
         G2 H = new G2();
         Mcl.hashAndMapToG2(H, msg); // H = Hash(m)
@@ -49,7 +52,9 @@ public class PublicKey implements java.security.PublicKey {
         Mcl.pairing(e2, Q, g2); // e2 = e(s H, Q);
         return e1.equals(e2);
     }
-    /*Here, h is the aggregation of the msg hashAndMapToG2*/
+    /*
+    * 验证聚合签名，h是待签名消息经过hashAndMapToG2函数处理的返回值
+    * */
     public boolean verifyAggregate(byte[] h, byte[] sig) {
         G2 H = new G2();
         H.deserialize(h); // H = Hash(m)
