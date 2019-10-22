@@ -1,9 +1,12 @@
-# 说明
+# Guide
 
-1 这个代码通过JNI实现BLS12-381的签名聚合
+1 Use jni implement BLS12-381 signature aggregate
 
-2 依赖 https://github.com/herumi/mcl
+2 Dependency: https://github.com/herumi/mcl
 
-3 编译 mvn install
+3 Compile: mvn install
 
-4 mvn test 
+4 Test: mvn test
+
+5 API: refer Bls.java, PrivateKey.java and PublicKey.java
+
