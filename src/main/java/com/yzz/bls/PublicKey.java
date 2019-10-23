@@ -9,7 +9,6 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 public class PublicKey implements java.security.PublicKey {
     private int curveType;
     private byte[] pubKey;
-    private String QF = "282899BF4430ADD41BDCE37577237ED1CCF1D1DD8F035ABEFC5CB4B2F5C8845F45257BACD6C4019535B0DC651084FF02";
     @Override
     public String getAlgorithm() {
         if(curveType == Bls.BLS12_381) {
@@ -44,7 +43,7 @@ public class PublicKey implements java.security.PublicKey {
         G1 pub = new G1();
         pub.deserialize(pubKey);
         G1 Q = new G1();
-        Q.deserialize(HexBin.decode(QF));
+        Q.setStr(Bls.BaseG1);
         G2 g2 = new G2();
         g2.deserialize(sig);
         GT e1 = new GT();
@@ -64,7 +63,8 @@ public class PublicKey implements java.security.PublicKey {
         G1 pub = new G1();
         pub.deserialize(pubKey);
         G1 Q = new G1();
-        Q.deserialize(HexBin.decode(QF));
+        Q.setStr(Bls.BaseG1);
+
         G2 g2 = new G2();
         g2.deserialize(sig);
         GT e1 = new GT();
