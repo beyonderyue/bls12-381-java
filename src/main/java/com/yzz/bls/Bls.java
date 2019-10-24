@@ -2,6 +2,7 @@ package com.yzz.bls;
 
 import com.herumi.mcl.G1;
 import com.herumi.mcl.G2;
+import com.herumi.mcl.GT;
 import com.herumi.mcl.Mcl;
 /*
 *  BLS API
@@ -69,5 +70,36 @@ public class Bls implements BlsConstants{
             Mcl.add(msgs[0], msgs[0], msgs[i]);
         }
         return msgs[0].serialize();
+    }
+    /*
+     * Verify aggregate signature
+     * Case: multiple messages, multiple private keys with multiple signatures
+     */
+    public boolean verifyAggregate(byte[][] msg, byte[] sig, byte[][] pub) {
+        G2[] H = new G2[msg.length];
+        for(int i=0;i<msg.length;i++) {
+            H[i] = new G2();
+            Mcl.hashAndMapToG2(H[i], msg[i]);
+        }
+        G1[] pubs = new G1[pub.length];
+        for(int i=0;i<pub.length;i++) {
+            pubs[i] = new G1();
+            pubs[i].deserialize(pub[i]);
+        }
+        G1 Q = new G1();
+        Q.setStr(Bls.BaseG1);
+        G2 g2 = new G2();
+        g2.deserialize(sig);
+        GT[] e1 = new GT[msg.length];
+        GT e2 = new GT();
+        for(int i=0;i<msg.length;i++) {
+            e1[i] = new GT();
+            Mcl.pairing(e1[i], pubs[i], H[i]); // e1 = e(H, s Q)
+        }
+        for(int i=1;i<msg.length;i++) {
+            Mcl.mul(e1[0],e1[0],e1[i]);
+        }
+        Mcl.pairing(e2, Q, g2); // e2 = e(s H, Q);
+        return e1[0].equals(e2);
     }
 }

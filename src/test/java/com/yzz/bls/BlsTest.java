@@ -12,12 +12,13 @@ public class BlsTest extends TestCase {
 
         byte[] sig = privateKey.sign("Hello 1world".getBytes());
         System.out.println(HexBin.encode(sig));
+        System.out.println(HexBin.encode(privateKey.getPublicKey().getEncoded()));
         assertTrue(privateKey.getPublicKey().verify("Hello 1world".getBytes(), sig));
 
     }
 
     public void testAggregateMsg() {
-        byte[][] msg = {"hello".getBytes(),"world".getBytes(),"!".getBytes()};
+        byte[][] msg = {"hello".getBytes(),"world".getBytes(),"!".getBytes(), "hahaha".getBytes()};
         Bls bls = new Bls(Bls.BLS12_381);
         PrivateKey privateKey = bls.generateSecKey();
         byte[][] sigs = new byte[msg.length][];
@@ -27,7 +28,6 @@ public class BlsTest extends TestCase {
 
         byte[] asig = bls.aggregateSignature(sigs);
         byte[] amsg = bls.aggregateMsg(msg);
-
         PublicKey publicKey = privateKey.getPublicKey();
         assertTrue(publicKey.verifyAggregate(amsg, asig));
     }
@@ -49,9 +49,9 @@ public class BlsTest extends TestCase {
         assertTrue(newPub.verify(msg, sig));
     }
 
-    /*public void testAggregateSignatureAndMsg() {
+    public void testAggregateSignatureAndMsg() {
         byte[][] msgs = {"hello".getBytes(),"world".getBytes(),"!".getBytes()};
-        Bls bls = new Bls(Mcl.BLS12_381);
+        Bls bls = new Bls(Bls.BLS12_381);
         PrivateKey[] privateKeys = new PrivateKey[msgs.length];
         byte[][] sigs = new byte[privateKeys.length][];
         byte[][] pubs = new byte[privateKeys.length][];
@@ -62,9 +62,6 @@ public class BlsTest extends TestCase {
         }
         byte[] sig = bls.aggregateSignature(sigs);
         byte[] pub = bls.aggregatePublicKey(pubs);
-        byte[] msg = bls.aggregateMsg(msgs);
-        PublicKey newPub = new PublicKey(Bls.BLS12_381, pub);
-        assertTrue(newPub.verify(msgs[0], sig));
-    }*/
-
+        assertTrue(bls.verifyAggregate(msgs, sig, pubs));
+    }
 }

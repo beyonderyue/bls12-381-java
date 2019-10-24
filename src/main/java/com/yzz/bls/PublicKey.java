@@ -4,14 +4,14 @@ import com.herumi.mcl.G1;
 import com.herumi.mcl.G2;
 import com.herumi.mcl.GT;
 import com.herumi.mcl.Mcl;
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 
 public class PublicKey implements java.security.PublicKey {
     private int curveType;
     private byte[] pubKey;
+
     @Override
     public String getAlgorithm() {
-        if(curveType == Bls.BLS12_381) {
+        if (curveType == Bls.BLS12_381) {
             return "BLS12-381";
         } else {
             return "NOT SUPPORTED";
@@ -32,6 +32,7 @@ public class PublicKey implements java.security.PublicKey {
         this.curveType = curveType;
         this.pubKey = pubKey;
     }
+
     /*
      * Veryfi signature
      * Case 1: single message and single signature
@@ -52,9 +53,10 @@ public class PublicKey implements java.security.PublicKey {
         Mcl.pairing(e2, Q, g2); // e2 = e(s H, Q);
         return e1.equals(e2);
     }
+
     /*
      * Verify mutiple signatures
-     * Case: Single private key and single message with multiple signatures
+     * Case: Single private key and multiple messages with multiple signatures
      * h: Not the message itself, it's result of hashAndMapToG2
      */
     public boolean verifyAggregate(byte[] h, byte[] sig) {
